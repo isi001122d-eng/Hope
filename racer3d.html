@@ -392,22 +392,22 @@
     // =========================================================================
     const canvas = document.getElementById('canvas3d');
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x060914);
-    scene.fog = new THREE.FogExp2(0x060914, 0.004);
+    scene.background = new THREE.Color(0x0a1128); // Twilight night sky
+    scene.fog = new THREE.Fog(0x0a1128, 140, 550); // Clear visibility far down the road
 
-    const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1200);
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1500);
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    // LIGHTING
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
+    // LIGHTING - Bright & clear visibility
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xffeedd, 0.8);
-    sunLight.position.set(40, 80, -30);
+    const sunLight = new THREE.DirectionalLight(0xffeedd, 1.2);
+    sunLight.position.set(40, 100, -50);
     sunLight.castShadow = true;
     sunLight.shadow.mapSize.width = 1024;
     sunLight.shadow.mapSize.height = 1024;
@@ -599,13 +599,13 @@
       car.add(hlL, hlR);
 
       if (isPlayer) {
-        // Player forward headlights cast real light down the road
-        const spotL = new THREE.SpotLight(0xddffff, 2.8, 70, Math.PI / 6, 0.4);
+        // Player forward headlights cast long-range light far down the road
+        const spotL = new THREE.SpotLight(0xeeffff, 3.8, 220, Math.PI / 5.5, 0.35);
         spotL.position.set(-0.7, 0.8, -2.2);
-        spotL.target.position.set(-0.7, 0, -50);
-        const spotR = new THREE.SpotLight(0xddffff, 2.8, 70, Math.PI / 6, 0.4);
+        spotL.target.position.set(-0.7, 0, -140);
+        const spotR = new THREE.SpotLight(0xeeffff, 3.8, 220, Math.PI / 5.5, 0.35);
         spotR.position.set(0.7, 0.8, -2.2);
-        spotR.target.position.set(0.7, 0, -50);
+        spotR.target.position.set(0.7, 0, -140);
         car.add(spotL, spotL.target, spotR, spotR.target);
         car.spotlights = [spotL, spotR];
 
@@ -623,11 +623,12 @@
         car.flames = [flameL, flameR];
       }
 
-      // Tail lights
-      const tailMat = new THREE.MeshBasicMaterial({ color: 0xff0044 });
-      const tlL = new THREE.Mesh(headLightGeo, tailMat);
+      // Tail lights (Bright glowing LED strips)
+      const tailGeo = new THREE.BoxGeometry(0.45, 0.16, 0.12);
+      const tailMat = new THREE.MeshBasicMaterial({ color: 0xff1144 });
+      const tlL = new THREE.Mesh(tailGeo, tailMat);
       tlL.position.set(-0.7, 0.62, 2.2);
-      const tlR = new THREE.Mesh(headLightGeo, tailMat);
+      const tlR = new THREE.Mesh(tailGeo, tailMat);
       tlR.position.set(0.7, 0.62, 2.2);
       car.add(tlL, tlR);
 
@@ -680,10 +681,10 @@
       trafficCars.push(car);
     }
 
-    // Initial batch
+    // Initial batch (Spawned well ahead for wide reaction time)
     for (let i = 1; i <= 6; i++) {
-      spawnTraffic(-i * 50);
-      if (i % 2 === 0) spawnCoin(-i * 45);
+      spawnTraffic(-80 - i * 60);
+      if (i % 2 === 0) spawnCoin(-60 - i * 50);
     }
 
     // =========================================================================
@@ -748,8 +749,8 @@
       coins.length = 0;
 
       for (let i = 1; i <= 6; i++) {
-        spawnTraffic(-i * 50);
-        if (i % 2 === 0) spawnCoin(-i * 45);
+        spawnTraffic(-80 - i * 60);
+        if (i % 2 === 0) spawnCoin(-60 - i * 50);
       }
     }
 
@@ -884,24 +885,28 @@
         document.getElementById('nitroBar').style.width = `${nitro}%`;
       }
 
-      // 7. Dynamic Chase Camera Positions
+      // 7. Dynamic Chase Camera Positions (High & Clear View)
       if (cameraMode === 0) {
-        // Dynamic Chase Cam (Slight lag + Field of View expansion on Nitro)
-        const targetCamX = playerCar.position.x * 0.7;
-        const targetCamY = 3.8 + (speed / 340) * 0.8;
-        const targetCamZ = 8.5 + (isNitro ? 2.0 : 0);
-        camera.position.x += (targetCamX - camera.position.x) * delta * 5;
-        camera.position.y += (targetCamY - camera.position.y) * delta * 5;
-        camera.position.z += (targetCamZ - camera.position.z) * delta * 5;
-        camera.lookAt(playerCar.position.x * 0.4, 1.2, -15);
+        // High Chase Cam: elevated so the player car never blocks the view ahead
+        const targetCamX = playerCar.position.x * 0.55;
+        const targetCamY = 5.8 + (speed / 340) * 0.9;
+        const targetCamZ = 12.2 + (isNitro ? 2.5 : 0);
+        camera.position.x += (targetCamX - camera.position.x) * delta * 6;
+        camera.position.y += (targetCamY - camera.position.y) * delta * 6;
+        camera.position.z += (targetCamZ - camera.position.z) * delta * 6;
+        // Look far ahead down the road
+        camera.lookAt(playerCar.position.x * 0.35, 1.4, -75);
       } else if (cameraMode === 1) {
-        // Close Cam
-        camera.position.set(playerCar.position.x, 2.2, 5.0);
-        camera.lookAt(playerCar.position.x, 1.0, -20);
+        // High Aerial / Drone Arcade Cam (Maximum situational awareness)
+        const targetCamX = playerCar.position.x * 0.45;
+        camera.position.x += (targetCamX - camera.position.x) * delta * 6;
+        camera.position.y = 8.5;
+        camera.position.z = 15.0;
+        camera.lookAt(playerCar.position.x * 0.25, 1.0, -85);
       } else {
-        // Hood Cam (FPV)
-        camera.position.set(playerCar.position.x, 1.15, -0.6);
-        camera.lookAt(playerCar.position.x, 1.0, -30);
+        // Hood Cam (FPV): zero obstructions, 100% road view
+        camera.position.set(playerCar.position.x, 1.35, -1.8);
+        camera.lookAt(playerCar.position.x, 1.1, -120);
       }
 
       renderer.render(scene, camera);
