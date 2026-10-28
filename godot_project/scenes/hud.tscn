@@ -1,6 +1,62 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="Style_GlassCard"]
+bg_color = Color(0.03, 0.06, 0.14, 0.78)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.9, 1, 0.55)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="Style_BarBg"]
+bg_color = Color(0.08, 0.12, 0.22, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Style_NitroFill"]
+bg_color = Color(0, 0.88, 1, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Style_ArmorFill"]
+bg_color = Color(0.1, 0.95, 0.48, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="Style_Modal"]
+bg_color = Color(0.04, 0.06, 0.15, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.15, 0.4, 0.85)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 24
+
+[sub_resource type="StyleBoxFlat" id="Style_Button"]
+bg_color = Color(0, 0.78, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -16,25 +72,26 @@ script = ExtResource("1_hud")
 layout_mode = 1
 offset_left = 20.0
 offset_top = 18.0
-offset_right = 360.0
-offset_bottom = 122.0
+offset_right = 375.0
+offset_bottom = 126.0
+theme_override_styles/panel = SubResource("Style_GlassCard")
 
 [node name="VBox" type="VBoxContainer" parent="TopLeftPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.0
+offset_left = 16.0
 offset_top = 10.0
-offset_right = -14.0
+offset_right = -16.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScoreLabel" type="Label" parent="TopLeftPanel/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 0.96, 1, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.15, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 23
 text = "XAL (SCORE): 0"
 
 [node name="HighScoreLabel" type="Label" parent="TopLeftPanel/VBox"]
@@ -45,7 +102,7 @@ text = "REKORD (BEST): 0"
 
 [node name="MetaLabel" type="Label" parent="TopLeftPanel/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.82, 0.88, 0.96, 1)
+theme_override_colors/font_color = Color(0.82, 0.9, 1, 1)
 theme_override_font_sizes/font_size = 14
 text = "LVL: 1  |  SIKKE: 0  |  0.00 km"
 
@@ -54,13 +111,13 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -320.0
-offset_top = 28.0
-offset_right = 320.0
+offset_left = -360.0
+offset_top = 26.0
+offset_right = 360.0
 offset_bottom = 76.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 24
-text = "HOPE 3D RACING"
+theme_override_font_sizes/font_size = 25
+text = "⚡ HOPE 3D ULTRA ⚡"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -71,22 +128,23 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 20.0
 offset_top = -126.0
-offset_right = 415.0
+offset_right = 430.0
 offset_bottom = -18.0
 grow_vertical = 0
+theme_override_styles/panel = SubResource("Style_GlassCard")
 
 [node name="ControlsLabel" type="Label" parent="BottomLeftPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.0
+offset_left = 16.0
 offset_top = 8.0
-offset_right = -14.0
+offset_right = -16.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.82, 0.9, 0.98, 1)
+theme_override_colors/font_color = Color(0.84, 0.92, 1, 1)
 theme_override_font_sizes/font_size = 13
 text = "[W/S] ve ya [Oxlar] : Qaz / Eylec   |   [A/D] : Sukan
 [SPACE] : Nitro Turbo (3x Xal)   |   [SHIFT] : Drift
@@ -100,22 +158,23 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -290.0
+offset_left = -295.0
 offset_top = -172.0
 offset_right = -20.0
 offset_bottom = -18.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_styles/panel = SubResource("Style_GlassCard")
 
 [node name="SpeedLabel" type="Label" parent="BottomRightPanel"]
 layout_mode = 0
-offset_left = 16.0
+offset_left = 18.0
 offset_top = 8.0
-offset_right = 185.0
+offset_right = 195.0
 offset_bottom = 56.0
 theme_override_colors/font_color = Color(0.15, 0.96, 1, 1)
 theme_override_font_sizes/font_size = 34
-text = "110 KM/H"
+text = "120 KM/H"
 
 [node name="GearLabel" type="Label" parent="BottomRightPanel"]
 layout_mode = 0
@@ -123,17 +182,19 @@ offset_left = 185.0
 offset_top = 18.0
 offset_right = 258.0
 offset_bottom = 50.0
-theme_override_colors/font_color = Color(1, 0.82, 0.15, 1)
+theme_override_colors/font_color = Color(1, 0.84, 0.15, 1)
 theme_override_font_sizes/font_size = 16
-text = "G2"
+text = "OTURME: G2"
 horizontal_alignment = 2
 
 [node name="NitroBar" type="ProgressBar" parent="BottomRightPanel"]
 layout_mode = 0
-offset_left = 16.0
+offset_left = 18.0
 offset_top = 66.0
-offset_right = 254.0
+offset_right = 256.0
 offset_bottom = 92.0
+theme_override_styles/background = SubResource("Style_BarBg")
+theme_override_styles/fill = SubResource("Style_NitroFill")
 value = 100.0
 show_percentage = false
 
@@ -141,8 +202,9 @@ show_percentage = false
 layout_mode = 0
 offset_left = 22.0
 offset_top = 67.0
-offset_right = 248.0
+offset_right = 252.0
 offset_bottom = 91.0
+theme_override_colors/font_color = Color(0.02, 0.06, 0.12, 1)
 theme_override_font_sizes/font_size = 13
 text = "⚡ NITRO TURBO"
 horizontal_alignment = 1
@@ -150,10 +212,12 @@ vertical_alignment = 1
 
 [node name="ArmorBar" type="ProgressBar" parent="BottomRightPanel"]
 layout_mode = 0
-offset_left = 16.0
+offset_left = 18.0
 offset_top = 106.0
-offset_right = 254.0
+offset_right = 256.0
 offset_bottom = 132.0
+theme_override_styles/background = SubResource("Style_BarBg")
+theme_override_styles/fill = SubResource("Style_ArmorFill")
 value = 100.0
 show_percentage = false
 
@@ -161,8 +225,9 @@ show_percentage = false
 layout_mode = 0
 offset_left = 22.0
 offset_top = 107.0
-offset_right = 248.0
+offset_right = 252.0
 offset_bottom = 131.0
+theme_override_colors/font_color = Color(0.02, 0.08, 0.04, 1)
 theme_override_font_sizes/font_size = 13
 text = "🛡️ ZIREH (ARMOR)"
 horizontal_alignment = 1
@@ -176,29 +241,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -150.0
-offset_right = 250.0
-offset_bottom = 150.0
+offset_left = -260.0
+offset_top = -155.0
+offset_right = 260.0
+offset_bottom = 155.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("Style_Modal")
 
 [node name="VBox" type="VBoxContainer" parent="GameOverPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 22.0
-offset_right = -24.0
-offset_bottom = -22.0
+offset_left = 26.0
+offset_top = 24.0
+offset_right = -26.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
 [node name="TitleLabel" type="Label" parent="GameOverPanel/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.2, 0.35, 1)
+theme_override_colors/font_color = Color(1, 0.18, 0.38, 1)
 theme_override_font_sizes/font_size = 32
 text = "💥 QEZA BAS VERDI!"
 horizontal_alignment = 1
@@ -210,7 +276,9 @@ text = "Yekun Xal: 0"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="GameOverPanel/VBox"]
-custom_minimum_size = Vector2(240, 46)
+custom_minimum_size = Vector2(260, 48)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.02, 0.05, 0.12, 1)
 theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_Button")
 text = "YENIDEN BASLA [SPACE / R]"
