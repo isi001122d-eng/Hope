@@ -1,0 +1,20 @@
+{
+  "name": "hope-terminal-racer",
+  "version": "1.0.0",
+  "description": "HTML-siz, tamamilə Node.js terminalında çalışan retro arkada maşın oyunu",
+  "main": "game.js",
+  "scripts": {
+    "start": "node game.js",
+    "test": "node game.js --test"
+  },
+  "keywords": [
+    "car-game",
+    "terminal",
+    "ascii",
+    "nodejs",
+    "arcade",
+    "racer"
+  ],
+  "author": "isi",
+  "license": "MIT"
+}
