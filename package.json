@@ -5,6 +5,7 @@
   "main": "game.js",
   "scripts": {
     "start": "node game.js",
+    "3d": "node launch3d.js",
     "test": "node game.js --test"
   },
   "keywords": [
