@@ -12,68 +12,205 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_hud")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="TopLeftPanel" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -260.0
-offset_top = -140.0
-offset_right = -30.0
-offset_bottom = -30.0
-grow_horizontal = 0
-grow_vertical = 0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 360.0
+offset_bottom = 122.0
 
-[node name="SpeedLabel" type="Label" parent="."]
+[node name="VBox" type="VBoxContainer" parent="TopLeftPanel"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = -130.0
-offset_right = -40.0
-offset_bottom = -75.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 38
-text = "0 KM/H"
+offset_left = 14.0
+offset_top = 10.0
+offset_right = -14.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreLabel" type="Label" parent="TopLeftPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "XAL (SCORE): 0"
+
+[node name="HighScoreLabel" type="Label" parent="TopLeftPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0.15, 1)
+theme_override_font_sizes/font_size = 16
+text = "REKORD (BEST): 0"
+
+[node name="MetaLabel" type="Label" parent="TopLeftPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.88, 0.96, 1)
+theme_override_font_sizes/font_size = 14
+text = "LVL: 1  |  SIKKE: 0  |  0.00 km"
+
+[node name="StatusBanner" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 28.0
+offset_right = 320.0
+offset_bottom = 76.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "HOPE 3D RACING"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NitroBar" type="ProgressBar" parent="."]
+[node name="BottomLeftPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -126.0
+offset_right = 415.0
+offset_bottom = -18.0
+grow_vertical = 0
+
+[node name="ControlsLabel" type="Label" parent="BottomLeftPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 8.0
+offset_right = -14.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.82, 0.9, 0.98, 1)
+theme_override_font_sizes/font_size = 13
+text = "[W/S] ve ya [Oxlar] : Qaz / Eylec   |   [A/D] : Sukan
+[SPACE] : Nitro Turbo (3x Xal)   |   [SHIFT] : Drift
+[C] : Kamera   |   [V] : Reng   |   [L] : Gece/Gunduz"
+vertical_alignment = 1
+
+[node name="BottomRightPanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -240.0
-offset_top = -65.0
-offset_right = -50.0
-offset_bottom = -45.0
+offset_left = -290.0
+offset_top = -172.0
+offset_right = -20.0
+offset_bottom = -18.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="SpeedLabel" type="Label" parent="BottomRightPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 185.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.15, 0.96, 1, 1)
+theme_override_font_sizes/font_size = 34
+text = "110 KM/H"
+
+[node name="GearLabel" type="Label" parent="BottomRightPanel"]
+layout_mode = 0
+offset_left = 185.0
+offset_top = 18.0
+offset_right = 258.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(1, 0.82, 0.15, 1)
+theme_override_font_sizes/font_size = 16
+text = "G2"
+horizontal_alignment = 2
+
+[node name="NitroBar" type="ProgressBar" parent="BottomRightPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 66.0
+offset_right = 254.0
+offset_bottom = 92.0
 value = 100.0
 show_percentage = false
 
-[node name="NitroLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -240.0
-offset_top = -65.0
-offset_right = -50.0
-offset_bottom = -45.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 12
-text = "NITRO TURBO"
+[node name="NitroTitle" type="Label" parent="BottomRightPanel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 67.0
+offset_right = 248.0
+offset_bottom = 91.0
+theme_override_font_sizes/font_size = 13
+text = "⚡ NITRO TURBO"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ArmorBar" type="ProgressBar" parent="BottomRightPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 106.0
+offset_right = 254.0
+offset_bottom = 132.0
+value = 100.0
+show_percentage = false
+
+[node name="ArmorTitle" type="Label" parent="BottomRightPanel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 107.0
+offset_right = 248.0
+offset_bottom = 131.0
+theme_override_font_sizes/font_size = 13
+text = "🛡️ ZIREH (ARMOR)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="GameOverPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 22.0
+offset_right = -24.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="GameOverPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.35, 1)
+theme_override_font_sizes/font_size = 32
+text = "💥 QEZA BAS VERDI!"
+horizontal_alignment = 1
+
+[node name="FinalStatsLabel" type="Label" parent="GameOverPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Yekun Xal: 0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOverPanel/VBox"]
+custom_minimum_size = Vector2(240, 46)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "YENIDEN BASLA [SPACE / R]"

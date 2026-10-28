@@ -1,3 +1,5 @@
 node_modules/
 highscore.json
 .DS_Store
+godot_project/.godot/
+tools/

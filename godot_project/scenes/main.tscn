@@ -1,13 +1,15 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=10 format=3]
 
-[ext_resource type="PackedScene" path="res://scenes/car.tscn" id="1_car"]
-[ext_resource type="Script" path="res://scripts/camera_follow.gd" id="2_cam"]
-[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="3_hud"]
+[ext_resource type="Script" path="res://scripts/world_manager.gd" id="1_world"]
+[ext_resource type="PackedScene" path="res://scenes/car.tscn" id="2_car"]
+[ext_resource type="Script" path="res://scripts/camera_follow.gd" id="3_cam"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="4_hud"]
 
 [sub_resource type="ProceduralSkyMaterial" id="SkyMat"]
-sky_top_color = Color(0.1, 0.16, 0.28, 1)
-sky_horizon_color = Color(0.3, 0.4, 0.55, 1)
-ground_bottom_color = Color(0.08, 0.1, 0.14, 1)
+sky_top_color = Color(0.04, 0.07, 0.16, 1)
+sky_horizon_color = Color(0.12, 0.18, 0.34, 1)
+ground_bottom_color = Color(0.04, 0.06, 0.1, 1)
+ground_horizon_color = Color(0.1, 0.15, 0.28, 1)
 
 [sub_resource type="Sky" id="Sky"]
 sky_material = SubResource("SkyMat")
@@ -15,67 +17,52 @@ sky_material = SubResource("SkyMat")
 [sub_resource type="Environment" id="Env"]
 background_mode = 2
 sky = SubResource("Sky")
+ambient_light_source = 2
+ambient_light_color = Color(0.68, 0.78, 0.95, 1)
+ambient_light_energy = 0.85
 tonemap_mode = 2
 glow_enabled = true
-glow_bloom = 0.15
+glow_bloom = 0.18
+fog_enabled = true
+fog_light_color = Color(0.08, 0.12, 0.24, 1)
+fog_density = 0.0022
 
-[sub_resource type="StandardMaterial3D" id="Mat_Road"]
-albedo_color = Color(0.12, 0.13, 0.16, 1)
-roughness = 0.85
+[sub_resource type="StandardMaterial3D" id="Mat_BaseGround"]
+albedo_color = Color(0.05, 0.08, 0.13, 1)
+roughness = 0.95
 
-[sub_resource type="BoxMesh" id="Mesh_Ground"]
-material = SubResource("Mat_Road")
-size = Vector3(40, 1, 600)
-
-[sub_resource type="BoxShape3D" id="Shape_Ground"]
-size = Vector3(40, 1, 600)
-
-[sub_resource type="StandardMaterial3D" id="Mat_Ramp"]
-albedo_color = Color(1, 0.6, 0, 1)
-roughness = 0.4
-
-[sub_resource type="BoxMesh" id="Mesh_Ramp"]
-material = SubResource("Mat_Ramp")
-size = Vector3(6, 1.5, 8)
-
-[sub_resource type="BoxShape3D" id="Shape_Ramp"]
-size = Vector3(6, 1.5, 8)
+[sub_resource type="BoxMesh" id="Mesh_BaseGround"]
+material = SubResource("Mat_BaseGround")
+size = Vector3(240, 0.2, 600)
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_world")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Env")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 40, 0)
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 35, 0)
+light_color = Color(0.95, 0.96, 1, 1)
+light_energy = 1.1
 shadow_enabled = true
 
-[node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+[node name="BaseGroundMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.28, -180)
+mesh = SubResource("Mesh_BaseGround")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("Mesh_Ground")
+[node name="RoadContainer" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("Shape_Ground")
+[node name="EntityContainer" type="Node3D" parent="."]
 
-[node name="Ramp" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0.2, -45)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ramp"]
-mesh = SubResource("Mesh_Ramp")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ramp"]
-shape = SubResource("Shape_Ramp")
-
-[node name="Car" parent="." instance=ExtResource("1_car")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 20)
+[node name="Car" parent="." instance=ExtResource("2_car")]
 
 [node name="ChaseCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 4.5, 28)
+transform = Transform3D(1, 0, 0, 0, 0.990268, 0.139173, 0, -0.139173, 0.990268, 0, 4.8, 9.4)
 current = true
-script = ExtResource("2_cam")
+fov = 68.0
+far = 900.0
+script = ExtResource("3_cam")
 target_path = NodePath("../Car")
 
-[node name="HUD" parent="." instance=ExtResource("3_hud")]
-car_path = NodePath("../Car")
+[node name="HUD" parent="." instance=ExtResource("4_hud")]

@@ -1,140 +1,152 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/car.gd" id="1_car"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_Paint"]
-albedo_color = Color(0, 0.85, 1, 1)
-metallic = 0.85
-roughness = 0.2
+albedo_color = Color(0, 0.88, 1, 1)
+metallic = 0.82
+roughness = 0.18
 
 [sub_resource type="BoxMesh" id="Mesh_Chassis"]
 material = SubResource("Mat_Paint")
-size = Vector3(2.0, 0.6, 4.2)
+size = Vector3(2.05, 0.48, 4.3)
 
-[sub_resource type="BoxShape3D" id="Shape_Chassis"]
-size = Vector3(2.0, 0.7, 4.2)
+[sub_resource type="BoxMesh" id="Mesh_Hood"]
+material = SubResource("Mat_Paint")
+size = Vector3(1.85, 0.25, 1.35)
 
 [sub_resource type="StandardMaterial3D" id="Mat_Cabin"]
-albedo_color = Color(0.08, 0.1, 0.15, 1)
-metallic = 0.9
-roughness = 0.1
+albedo_color = Color(0.06, 0.09, 0.16, 1)
+metallic = 0.92
+roughness = 0.08
 
 [sub_resource type="BoxMesh" id="Mesh_Cabin"]
 material = SubResource("Mat_Cabin")
-size = Vector3(1.5, 0.5, 2.2)
+size = Vector3(1.56, 0.46, 2.15)
+
+[sub_resource type="BoxMesh" id="Mesh_Spoiler"]
+material = SubResource("Mat_Paint")
+size = Vector3(2.0, 0.09, 0.42)
+
+[sub_resource type="StandardMaterial3D" id="Mat_LED_Front"]
+shading_mode = 0
+albedo_color = Color(0.75, 0.98, 1, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_Headlight"]
+material = SubResource("Mat_LED_Front")
+size = Vector3(0.42, 0.12, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_LED_Rear"]
+shading_mode = 0
+albedo_color = Color(1, 0.08, 0.24, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_Taillight"]
+material = SubResource("Mat_LED_Rear")
+size = Vector3(0.48, 0.15, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Flame"]
+shading_mode = 0
+albedo_color = Color(0, 0.96, 1, 1)
+
+[sub_resource type="CylinderMesh" id="Mesh_Flame"]
+material = SubResource("Mat_Flame")
+top_radius = 0.04
+bottom_radius = 0.22
+height = 1.1
 
 [sub_resource type="StandardMaterial3D" id="Mat_Tire"]
-albedo_color = Color(0.12, 0.12, 0.14, 1)
+albedo_color = Color(0.1, 0.1, 0.12, 1)
 roughness = 0.85
 
 [sub_resource type="CylinderMesh" id="Mesh_Wheel"]
 material = SubResource("Mat_Tire")
 top_radius = 0.4
 bottom_radius = 0.4
-height = 0.35
+height = 0.34
 radial_segments = 16
 
-[sub_resource type="StandardMaterial3D" id="Mat_Flame"]
-shading_mode = 0
-albedo_color = Color(0, 0.95, 1, 1)
-
-[sub_resource type="CylinderMesh" id="Mesh_Flame"]
-material = SubResource("Mat_Flame")
-top_radius = 0.05
-bottom_radius = 0.2
-height = 0.9
-
-[node name="Car" type="VehicleBody3D"]
-mass = 1200.0
-center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.2, 0)
+[node name="Car" type="Node3D"]
 script = ExtResource("1_car")
 
-[node name="ChassisMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+[node name="BodyPivot" type="Node3D" parent="."]
+
+[node name="ChassisMesh" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.52, 0)
 mesh = SubResource("Mesh_Chassis")
 
-[node name="CabinMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, -0.2)
+[node name="HoodMesh" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0.68, -1.35)
+mesh = SubResource("Mesh_Hood")
+
+[node name="CabinMesh" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92, -0.1)
 mesh = SubResource("Mesh_Cabin")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
-shape = SubResource("Shape_Chassis")
+[node name="SpoilerWing" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 1.88)
+mesh = SubResource("Mesh_Spoiler")
 
-[node name="HeadlightL" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.6, -2.1)
-light_color = Color(0.85, 0.95, 1, 1)
-light_energy = 4.0
-spot_range = 65.0
+[node name="HeadlightMeshL" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.68, 0.58, -2.16)
+mesh = SubResource("Mesh_Headlight")
+
+[node name="HeadlightMeshR" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68, 0.58, -2.16)
+mesh = SubResource("Mesh_Headlight")
+
+[node name="HeadlightSpotL" type="SpotLight3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, -0.68, 0.72, -2.2)
+light_color = Color(0.85, 0.96, 1, 1)
+light_energy = 4.5
+spot_range = 95.0
 spot_angle = 28.0
 
-[node name="HeadlightR" type="SpotLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0.6, -2.1)
-light_color = Color(0.85, 0.95, 1, 1)
-light_energy = 4.0
-spot_range = 65.0
+[node name="HeadlightSpotR" type="SpotLight3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0.68, 0.72, -2.2)
+light_color = Color(0.85, 0.96, 1, 1)
+light_energy = 4.5
+spot_range = 95.0
 spot_angle = 28.0
 
-[node name="NitroFlameL" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.45, 0.45, 2.5)
+[node name="TailLightL" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.68, 0.62, 2.16)
+mesh = SubResource("Mesh_Taillight")
+
+[node name="TailLightR" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68, 0.62, 2.16)
+mesh = SubResource("Mesh_Taillight")
+
+[node name="NitroFlameL" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.46, 0.42, 2.65)
 mesh = SubResource("Mesh_Flame")
 
-[node name="NitroFlameR" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.45, 0.45, 2.5)
+[node name="NitroFlameR" type="MeshInstance3D" parent="BodyPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.46, 0.42, 2.65)
 mesh = SubResource("Mesh_Flame")
 
-[node name="WheelFrontLeft" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05, 0.38, -1.35)
-use_as_steering = true
-wheel_roll_influence = 0.1
-wheel_radius = 0.4
-suspension_travel = 0.2
-suspension_stiffness = 55.0
-damping_compression = 1.8
-damping_relaxation = 2.4
+[node name="WheelFrontLeft" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04, 0.4, -1.32)
 
 [node name="WheelMesh" type="MeshInstance3D" parent="WheelFrontLeft"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("Mesh_Wheel")
 
-[node name="WheelFrontRight" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05, 0.38, -1.35)
-use_as_steering = true
-wheel_roll_influence = 0.1
-wheel_radius = 0.4
-suspension_travel = 0.2
-suspension_stiffness = 55.0
-damping_compression = 1.8
-damping_relaxation = 2.4
+[node name="WheelFrontRight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.04, 0.4, -1.32)
 
 [node name="WheelMesh" type="MeshInstance3D" parent="WheelFrontRight"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("Mesh_Wheel")
 
-[node name="WheelBackLeft" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05, 0.38, 1.35)
-use_as_traction = true
-wheel_roll_influence = 0.1
-wheel_radius = 0.4
-suspension_travel = 0.2
-suspension_stiffness = 55.0
-damping_compression = 1.8
-damping_relaxation = 2.4
+[node name="WheelBackLeft" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04, 0.4, 1.32)
 
 [node name="WheelMesh" type="MeshInstance3D" parent="WheelBackLeft"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("Mesh_Wheel")
 
-[node name="WheelBackRight" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05, 0.38, 1.35)
-use_as_traction = true
-wheel_roll_influence = 0.1
-wheel_radius = 0.4
-suspension_travel = 0.2
-suspension_stiffness = 55.0
-damping_compression = 1.8
-damping_relaxation = 2.4
+[node name="WheelBackRight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.04, 0.4, 1.32)
 
 [node name="WheelMesh" type="MeshInstance3D" parent="WheelBackRight"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
