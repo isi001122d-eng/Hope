@@ -691,13 +691,13 @@
     // GAMEPLAY STATE & CONTROLS
     // =========================================================================
     let gameState = 'START'; // START, PLAYING, GAMEOVER
-    let speed = 0; // km/h
-    let targetSpeed = 120;
+    let speed = 10000; // km/h
+    let targetSpeed = 3200;
     let score = 0;
     let highScore = localStorage.getItem('hope_3d_highscore') || 0;
     document.getElementById('highScoreVal').innerText = highScore;
     let coinCount = 0;
-    let nitro = 100;
+    let nitro = 200000;
     let isNitro = false;
     let cameraMode = 0; // 0: Chase, 1: Close, 2: Hood
 
@@ -735,10 +735,10 @@
 
     function resetGame() {
       speed = 0;
-      targetSpeed = 120;
+      targetSpeed = 320000;
       score = 0;
       coinCount = 0;
-      nitro = 100;
+      nitro = 200000;
       playerCar.position.set(0, 0, 0);
       playerCar.rotation.set(0, 0, 0);
 
@@ -768,21 +768,21 @@
         if (keys['w'] || keys['arrowup']) {
           targetSpeed = 220;
         } else if (keys['s'] || keys['arrowdown']) {
-          targetSpeed = 50;
+          targetSpeed = 5000;
         } else {
-          targetSpeed = 130;
+          targetSpeed = 13000;
         }
 
         // 2. Nitro Handling
         if (isNitro && nitro > 0) {
-          targetSpeed = 340;
+          targetSpeed = 34000;
           nitro = Math.max(0, nitro - delta * 25);
           playerCar.flames.forEach(f => {
             f.visible = true;
             f.scale.set(1 + Math.random() * 0.3, 1 + Math.random() * 0.5, 1);
           });
         } else {
-          nitro = Math.min(100, nitro + delta * 6);
+          nitro = Math.min(10000, nitro + delta * 6);
           playerCar.flames.forEach(f => f.visible = false);
         }
 

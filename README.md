@@ -15,19 +15,25 @@ Tamamilə **HTML-siz**, birbaşa **Node.js Terminalında (Konsolda)** rəngli AN
 - **4 Rəng Teması (`T`):** `NEON SYNTH`, `CLASSIC ARCADE`, `MATRIX GRID`, `NIGHT FURY`.
 - **Yaddaşda Rekord (`highscore.json`):** Ən yüksək nəticə avtomatik saxlanılır.
 
-## Oyun Rejimləri
+## Oyun Rejimləri və Mühərriklər
 
-### 1. 3D Turbo Highway Racer (Real 3D Qrafika)
-Brauzerdə dərhal açılan Three.js əsaslı 3D arkada yarışı (asqı fizikası, gecə/gündüz işıqları, nitro və spidometr):
+### 1. Godot Engine 4 (3D Oyun Mühərriki Layihəsi - Tövsiyə Olunur!)
+Tam **VehicleBody3D** asqı fizikası, 4 təkərli tənzimləmə, Nitro turbo, dinamik kamera və rəqəmsal HUD ilə təchiz olunmuş Godot 4 layihəsi:
+* Qovluq: [`godot_project/`](file:///c:/Users/isi00/Documents/antigravity/resilient-oppenheimer/godot_project)
+* Bələdçi: 👉 **[GODOT_GUIDE.md](file:///c:/Users/isi00/Documents/antigravity/resilient-oppenheimer/GODOT_GUIDE.md)**
+
+---
+
+### 2. 3D Turbo Highway Racer (Web 3D)
+Brauzerdə dərhal açılan Three.js əsaslı 3D arkada yarışı:
 
 ```bash
 npm run 3d
 ```
-*(və ya birbaşa `racer3d.html` faylını iki dəfə klikləyib açın)*
 
 ---
 
-### 2. Retro Terminal Racer (HTML-siz Konsol Oyunu)
+### 3. Retro Terminal Racer (HTML-siz Konsol Oyunu)
 Tamamilə terminal daxilində çalışan 2D ANSI/ASCII arkada yarışı:
 
 ```bash
